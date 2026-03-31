@@ -61,23 +61,34 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            gap: 20px;
         }
 
         .logo {
-            font-size: 1.6rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #3B82F6, #8B5CF6, #FFFFFF);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .logo img {
-            height: 40px;
+            height: 160px;  /* 4 VECES MÁS GRANDE (antes 40px) */
             width: auto;
+            max-width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Texto fallback si no hay imagen */
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6, #FFFFFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         /* Botones - WhatsApp se mantiene verde para reconocimiento inmediato */
@@ -312,7 +323,7 @@
             text-align: center;
         }
 
-        /* WhatsApp flotante (se mantiene verde) */
+        /* WhatsApp flotante */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -376,6 +387,19 @@
                 bottom: 20px;
                 right: 20px;
             }
+            .logo img {
+                height: 100px;  /* En móvil también es más grande pero proporcionado */
+            }
+            .header-flex {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 80px;
+            }
         }
 
         footer {
@@ -405,8 +429,7 @@
     <header class="header">
         <div class="container header-flex">
             <div class="logo">
-                <img src="logo-automatixia.png" alt="AutomatixIA" onerror="this.style.display='none'; this.parentElement.innerHTML='🤖 AUTOMATIXIA'">
-                <span style="display: none;">🤖 AUTOMATIXIA</span>
+                <img src="logo-automatixia.png" alt="AutomatixIA" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=logo-text>🤖 AUTOMATIXIA</span>'">
             </div>
             <a href="https://wa.me/593999424550?text=Quiero%20mi%20demo%20gratis" class="btn-outline" target="_blank"><i class="fab fa-whatsapp"></i> Demo gratis</a>
         </div>
@@ -636,7 +659,6 @@
             this.vx = vx;
             this.vy = vy;
             this.radius = PARTICLE_RADIUS;
-            // Colores entre azul y púrpura
             const colors = ['#3B82F6', '#6366F1', '#8B5CF6', '#A78BFA'];
             this.color = colors[Math.floor(Math.random() * colors.length)];
             this.opacity = Math.random() * 0.6 + 0.2;
